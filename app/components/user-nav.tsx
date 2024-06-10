@@ -11,6 +11,7 @@ import {
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
+import Link from "next/link";
 
 interface UserNavProps {
     email: string;
@@ -43,7 +44,9 @@ export const UserNav = ({ email, name, userImage }: UserNavProps) => {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>Test Item</DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link href="/sell">Sell Your Product</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Test Item</DropdownMenuItem>
                     <DropdownMenuItem>Test Item</DropdownMenuItem>
                     <DropdownMenuItem>Test Item</DropdownMenuItem>
