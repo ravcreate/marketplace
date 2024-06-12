@@ -43,11 +43,13 @@ export const UserNav = ({ email, name, userImage }: UserNavProps) => {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuGroup>
+                <DropdownMenuGroup className="flex flex-col">
                     <DropdownMenuItem asChild>
                         <Link href="/sell">Sell Your Product</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Test Item</DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link href="/settings">Settings</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Test Item</DropdownMenuItem>
                     <DropdownMenuItem>Test Item</DropdownMenuItem>
                 </DropdownMenuGroup>

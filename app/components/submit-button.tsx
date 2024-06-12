@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
-export const SubmitButton = () => {
+export const SubmitButton = ({ children }: { children: React.ReactNode }) => {
     const { pending } = useFormStatus();
 
     return (
@@ -15,7 +15,7 @@ export const SubmitButton = () => {
                     Please wait
                 </Button>
             ) : (
-                <Button type="submit">Create your product</Button>
+                <Button type="submit">{children}</Button>
             )}
         </>
     );

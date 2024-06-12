@@ -187,7 +187,7 @@ export default function SellRoute() {
                     </CardContent>
 
                     <CardFooter className="mt-5">
-                        <SubmitButton />
+                        <SubmitButton>Create your product</SubmitButton>
                     </CardFooter>
                 </form>
             </Card>

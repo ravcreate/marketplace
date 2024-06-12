@@ -2,9 +2,10 @@
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-import { productSchema, Product, State } from "./type";
+import { productSchema, userSettingsSchema } from "./schema";
 import prisma from "./db";
 import { CategoryTypes } from "@prisma/client";
+import { State } from "./type";
 
 export async function getCurrentUser() {
     const { getUser } = getKindeServerSession();
@@ -57,6 +58,58 @@ export async function sellProduct(prevState: any, formData: FormData) {
     const state: State = {
         status: "success",
         message: "Your Product has been created!",
+    };
+
+    return state;
+}
+
+export async function getData() {
+    const user = await getCurrentUser();
+    const data = await prisma.user.findUnique({
+        where: {
+            id: user.id,
+        },
+        select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+        },
+    });
+
+    return data;
+}
+
+export async function UpdateUserSettings(prevState: any, formData: FormData) {
+    const user = await getCurrentUser();
+
+    const validateFields = userSettingsSchema.safeParse({
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+    });
+
+    if (!validateFields.success) {
+        const state: State = {
+            status: "error",
+            errors: validateFields.error.flatten().fieldErrors,
+            message: "Form is invalid.",
+        };
+
+        return state;
+    }
+
+    const data = await prisma.user.update({
+        where: {
+            id: user.id,
+        },
+        data: {
+            firstName: validateFields.data.firstName,
+            lastName: validateFields.data.lastName,
+        },
+    });
+
+    const state: State = {
+        status: "success",
+        message: "Your settings have been updated",
     };
 
     return state;
