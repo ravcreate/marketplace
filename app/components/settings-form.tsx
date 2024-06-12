@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SubmitButton } from "./submit-button";
 import { useFormState } from "react-dom";
-import { UpdateUserSettings } from "@/lib/actions";
+import { updateUserSettings } from "@/lib/actions";
 import { State } from "@/lib/type";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -27,7 +27,7 @@ interface SettingsFormProps {
  */
 const SettingsForm = ({ firstName, lastName, email }: SettingsFormProps) => {
     const initialState: State = { message: "", status: undefined };
-    const [state, formAction] = useFormState(UpdateUserSettings, initialState);
+    const [state, formAction] = useFormState(updateUserSettings, initialState);
 
     useEffect(() => {
         if (state?.status === "error") {

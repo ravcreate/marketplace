@@ -63,7 +63,7 @@ export async function sellProduct(prevState: any, formData: FormData) {
     return state;
 }
 
-export async function getData() {
+export async function getUserData() {
     const user = await getCurrentUser();
     const data = await prisma.user.findUnique({
         where: {
@@ -79,7 +79,7 @@ export async function getData() {
     return data;
 }
 
-export async function UpdateUserSettings(prevState: any, formData: FormData) {
+export async function updateUserSettings(prevState: any, formData: FormData) {
     const user = await getCurrentUser();
 
     const validateFields = userSettingsSchema.safeParse({
@@ -113,4 +113,23 @@ export async function UpdateUserSettings(prevState: any, formData: FormData) {
     };
 
     return state;
+}
+
+export async function getProductData() {
+    const data = await prisma.product.findMany({
+        select: {
+            price: true,
+            smallDescription: true,
+            category: true,
+            name: true,
+            id: true,
+            images: true,
+        },
+        take: 4,
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+
+    return data;
 }
