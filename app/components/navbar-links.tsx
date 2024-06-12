@@ -9,7 +9,7 @@ import { navbarLinks } from "@/lib/data";
 
 export const NavLinks = () => {
     const path = usePathname();
-    console.log(path);
+    // console.log(path);
 
     return (
         <div className="hidden justify-center items-center col-span-6 gap-x-2 md:flex">

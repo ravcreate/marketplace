@@ -115,7 +115,7 @@ export async function updateUserSettings(prevState: any, formData: FormData) {
     return state;
 }
 
-export async function getProductData() {
+export async function getProducts() {
     const data = await prisma.product.findMany({
         select: {
             price: true,
@@ -131,5 +131,29 @@ export async function getProductData() {
         },
     });
 
+    return data;
+}
+
+export async function getProduct(id: string) {
+    const data = await prisma.product.findUnique({
+        where: {
+            id: id,
+        },
+        select: {
+            category: true,
+            description: true,
+            smallDescription: true,
+            name: true,
+            images: true,
+            price: true,
+            createdAt: true,
+            User: {
+                select: {
+                    profileImage: true,
+                    firstName: true,
+                },
+            },
+        },
+    });
     return data;
 }

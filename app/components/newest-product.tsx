@@ -1,9 +1,9 @@
-import { getProductData } from "@/lib/actions";
+import { getProducts } from "@/lib/actions";
 import Link from "next/link";
 import ProductCard from "./product-card";
 
 const NewestProduct = async () => {
-    const data = await getProductData();
+    const data = await getProducts();
 
     return (
         <section className="mt-12">
