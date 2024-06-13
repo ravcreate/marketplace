@@ -1,5 +1,7 @@
 import Image from "next/image";
 import NewestProduct from "./components/newest-product";
+import ProductRow from "./components/product-row";
+import { Category } from "@/lib/type";
 
 export default function Home() {
     return (
@@ -11,7 +13,10 @@ export default function Home() {
                     The worlds best marketplace for tempales, icons, and code.
                 </p>
             </div>
-            <NewestProduct />
+            <ProductRow category={Category.NEWEST} />
+            <ProductRow category={Category.TEMPLATES} />
+            <ProductRow category={Category.UIKITS} />
+            <ProductRow category={Category.ICONS} />
         </section>
     );
 }

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AppProps {
     images: string[];
@@ -69,6 +70,19 @@ const ProductCard = ({
             <Button asChild className="w-full mt-5">
                 <Link href={`/product/${id}`}>Learn More</Link>
             </Button>
+        </div>
+    );
+};
+
+export const ProductLoadingCard = () => {
+    return (
+        <div className="flex flex-col">
+            <Skeleton className="w-full h-[230px] bg-gray-200" />
+            <div className="flex flex-col mt-2 gap-y-2">
+                <Skeleton className="h-8 bg-gray-200" />
+                <Skeleton className="w-full h-6 bg-gray-200" />
+            </div>
+            <Skeleton className="w-full  h-10 mt-5 bg-gray-200" />
         </div>
     );
 };

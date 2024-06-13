@@ -4,8 +4,9 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { productSchema, userSettingsSchema } from "./schema";
 import prisma from "./db";
+import { Category, Link, State } from "./type";
+import { notFound } from "next/navigation";
 import { CategoryTypes } from "@prisma/client";
-import { State } from "./type";
 
 export async function getCurrentUser() {
     const { getUser } = getKindeServerSession();
@@ -19,8 +20,7 @@ export async function getCurrentUser() {
 
 export async function sellProduct(prevState: any, formData: FormData) {
     const user = await getCurrentUser();
-
-    console.log("FormData :", formData);
+    //console.log("FormData :", formData);
 
     const validateFields = productSchema.safeParse({
         name: formData.get("name"),
@@ -156,4 +156,186 @@ export async function getProduct(id: string) {
         },
     });
     return data;
+}
+
+export async function getCategory(category: string) {
+    // dependant upon params
+    let input;
+
+    switch (category) {
+        case "template": {
+            input = "template";
+            break;
+        }
+
+        case "uikit": {
+            input = "uikit";
+            break;
+        }
+
+        case "icon": {
+            input = "icon";
+            break;
+        }
+
+        case "newest": {
+            input = "newest";
+            break;
+        }
+
+        case " all": {
+            input = undefined;
+            break;
+        }
+
+        default: {
+            return notFound();
+        }
+    }
+
+    if (input === "newest") {
+        const data = await prisma.product.findMany({
+            select: {
+                price: true,
+                name: true,
+                smallDescription: true,
+                id: true,
+                images: true,
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
+
+        return data;
+    }
+
+    const data = await prisma.product.findMany({
+        where: {
+            category: input as CategoryTypes,
+        },
+        select: {
+            id: true,
+            images: true,
+            smallDescription: true,
+            name: true,
+            price: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+
+    return data;
+}
+
+/**
+ *	Get Products By Category
+ */
+export async function getProductsByCategory(
+    category: Category,
+    itemCount: number
+) {
+    switch (category) {
+        case Category.ICONS: {
+            const data = await prisma.product.findMany({
+                where: {
+                    category: "icon",
+                },
+                select: {
+                    price: true,
+                    name: true,
+                    smallDescription: true,
+                    id: true,
+                    images: true,
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                take: itemCount,
+            });
+
+            return {
+                data: data,
+                title: "Icons",
+                path: Link.ICON,
+            };
+        }
+
+        case Category.NEWEST: {
+            const data = await prisma.product.findMany({
+                select: {
+                    price: true,
+                    name: true,
+                    smallDescription: true,
+                    id: true,
+                    images: true,
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                take: itemCount,
+            });
+
+            return {
+                data: data,
+                title: "Newest Products",
+                path: Link.NEWEST,
+            };
+        }
+
+        case Category.TEMPLATES: {
+            const data = await prisma.product.findMany({
+                where: {
+                    category: "template",
+                },
+                select: {
+                    id: true,
+                    price: true,
+                    name: true,
+                    smallDescription: true,
+                    images: true,
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                take: itemCount,
+            });
+
+            return {
+                data: data,
+                title: "Templates",
+                path: Link.TEMPLATE,
+            };
+        }
+
+        case Category.UIKITS: {
+            const data = await prisma.product.findMany({
+                where: {
+                    category: "uikit",
+                },
+                select: {
+                    id: true,
+                    price: true,
+                    name: true,
+                    smallDescription: true,
+                    images: true,
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                take: itemCount,
+            });
+
+            return {
+                data: data,
+                title: "UIKits",
+                path: Link.UIKIT,
+            };
+        }
+
+        default: {
+            return notFound();
+        }
+    }
 }
