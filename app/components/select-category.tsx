@@ -1,6 +1,6 @@
 "use client";
 
-import { categoryItems } from "@/app/lib/category-items";
+import { categoryItems } from "@/lib/category-items";
 import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useState } from "react";

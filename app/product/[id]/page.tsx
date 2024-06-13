@@ -20,7 +20,7 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
     console.log(data?.images);
 
     return (
-        <section className="max-w-7xl mx-auto px-4 lg:px-8 lg:grid lg:grid-rows-1 lg:grid-cols-7 mt-20 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
+        <section className="max-w-7xl mx-auto px-4 py-10 lg:px-8 lg:grid lg:grid-rows-1 lg:grid-cols-7 mt-20 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
             <Carousel className="lg:row-end-1 lg:col-span-4">
                 <CarouselContent>
                     {data?.images.map((item, index) => (

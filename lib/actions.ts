@@ -339,3 +339,28 @@ export async function getProductsByCategory(
         }
     }
 }
+
+export async function getUserProducts() {
+    const user = await getCurrentUser();
+    console.log(user.id);
+
+    const data = await prisma.product.findMany({
+        where: {
+            userId: user.id,
+        },
+        select: {
+            id: true,
+            price: true,
+            name: true,
+            smallDescription: true,
+            images: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+
+    console.log(data);
+
+    return data;
+}
