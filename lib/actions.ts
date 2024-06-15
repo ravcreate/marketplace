@@ -5,8 +5,10 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { productSchema, userSettingsSchema } from "./schema";
 import prisma from "./db";
 import { Category, Link, State } from "./type";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { CategoryTypes } from "@prisma/client";
+import { East_Sea_Dokdo } from "next/font/google";
+import { stripe } from "./stripe/stripe";
 
 export async function getCurrentUser() {
     const { getUser } = getKindeServerSession();
@@ -140,6 +142,7 @@ export async function getProduct(id: string) {
             id: id,
         },
         select: {
+            id: true,
             category: true,
             description: true,
             smallDescription: true,
@@ -363,4 +366,48 @@ export async function getUserProducts() {
     console.log(data);
 
     return data;
+}
+
+/**
+ *	Checks if the user's Stripe Connected is linked.
+ */
+export async function getStripeConnectedData() {
+    const user = await getCurrentUser();
+
+    const data = await prisma.user.findUnique({
+        where: {
+            id: user.id,
+        },
+        select: {
+            stripeConnectedLinked: true,
+        },
+    });
+
+    return data?.stripeConnectedLinked;
+}
+
+/**
+ *	Create a Stripe Account Link for the Stripe Connected User
+ */
+export async function createdStripeAccountLink() {
+    const user = await getCurrentUser();
+
+    const data = await prisma.user.findUnique({
+        where: {
+            id: user.id,
+        },
+        select: {
+            connectedAccountId: true,
+        },
+    });
+
+    // returns an account links object
+    const accountLink = await stripe.accountLinks.create({
+        account: data?.connectedAccountId as string,
+        refresh_url: `http://localhost:3000/billing`,
+        return_url: `http://localhost:3000/return/${data?.connectedAccountId}`,
+        type: "account_onboarding",
+    });
+
+    return redirect(accountLink.url);
 }

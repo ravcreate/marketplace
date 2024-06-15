@@ -9,15 +9,14 @@ import {
 } from "@/components/ui/carousel";
 
 import { getProduct } from "@/lib/actions";
-import { Button } from "@/components/ui/button";
-import { ProductDescription } from "@/app/components/product-description";
+import { ProductDescription } from "@/app/_components/product-description";
 import { JSONContent } from "@tiptap/react";
+import { createCheckoutSessions } from "@/lib/stripe/create-checkout-sessions";
+import { SubmitButton } from "@/app/_components/submit-button";
 
 const ProductPage = async ({ params }: { params: { id: string } }) => {
     const data = await getProduct(params.id);
     const isMultipleImages = data?.images.length! > 1 ? true : false;
-
-    console.log(data?.images);
 
     return (
         <section className="max-w-7xl mx-auto px-4 py-10 lg:px-8 lg:grid lg:grid-rows-1 lg:grid-cols-7 mt-20 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
@@ -53,9 +52,12 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
                 <p className="mt-2 text-muted-foreground">
                     {data?.smallDescription}
                 </p>
-                <Button size="lg" className="w-full mt-10">
-                    Buy for ${data?.price}
-                </Button>
+                <form action={createCheckoutSessions}>
+                    <input type="hidden" name="id" value={data?.id} />
+                    <SubmitButton size="lg" className="w-full mt-10">
+                        Buy for ${data?.price}
+                    </SubmitButton>
+                </form>
                 <div className="border-t border-gray-200 mt-10 pt-10">
                     <div className="grid grid-cols-2 w-full gap-y-3">
                         <h3 className="text-sm font-medium text-muted-foreground col-span-1">

@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { getCurrentUser, getUserData } from "@/lib/actions";
-import SettingsForm from "../components/form/settings-form";
+import SettingsForm from "../_components/form/settings-form";
 
 const SettingsPage = async () => {
     const data = await getUserData();

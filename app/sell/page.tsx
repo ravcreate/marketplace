@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import SellForm from "../components/form/sell-form";
+import SellForm from "../_components/form/sell-form";
 import { getCurrentUser } from "@/lib/actions";
 
 /**

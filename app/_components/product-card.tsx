@@ -63,8 +63,7 @@ const ProductCard = ({
             </div>
 
             <p className="text-gray-600 line-clamp-2 text-sm mt-2">
-                {smallDescription};lkadj;klfadlkjf;lkajdl;kfja;lkdafj;lk
-                kljad;lkfjaldkflakjdfl;k
+                {smallDescription}
             </p>
 
             <Button asChild className="w-full mt-5">

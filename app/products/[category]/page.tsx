@@ -1,4 +1,4 @@
-import ProductCard from "@/app/components/product-card";
+import ProductCard from "@/app/_components/product-card";
 import { getCategory } from "@/lib/actions";
 
 const CategoryPage = async ({ params }: { params: { category: string } }) => {

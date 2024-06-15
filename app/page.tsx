@@ -1,6 +1,6 @@
 import Image from "next/image";
-import NewestProduct from "./components/newest-product";
-import ProductRow from "./components/product-row";
+import NewestProduct from "./_components/newest-product";
+import ProductRow from "./_components/product-row";
 import { Category } from "@/lib/type";
 
 export default function Home() {

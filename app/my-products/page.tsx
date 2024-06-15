@@ -1,5 +1,5 @@
 import { getUserProducts } from "@/lib/actions";
-import ProductCard from "../components/product-card";
+import ProductCard from "../_components/product-card";
 
 const MyProductRoute = async () => {
     const data = await getUserProducts();

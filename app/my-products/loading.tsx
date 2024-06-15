@@ -1,4 +1,4 @@
-import { ProductLoadingCard } from "../components/product-card";
+import { ProductLoadingCard } from "../_components/product-card";
 
 const LoadingFile = () => {
     return (

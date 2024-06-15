@@ -1,4 +1,4 @@
-import { ProductLoadingCard } from "@/app/components/product-card";
+import { ProductLoadingCard } from "@/app/_components/product-card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function LoadingFile() {

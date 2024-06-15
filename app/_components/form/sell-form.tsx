@@ -2,7 +2,7 @@
 
 import { UploadDropzone } from "@/lib/uploadingthing";
 
-import { TipTapEditor } from "@/app/components/editor";
+import { TipTapEditor } from "@/app/_components/editor";
 
 import {
     Card,
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SelectCategory } from "@/app/components/select-category";
+import { SelectCategory } from "@/app/_components/select-category";
 import { Textarea } from "@/components/ui/textarea";
 
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ import { useFormState } from "react-dom";
 import { sellProduct } from "@/lib/actions";
 import { State } from "@/lib/type";
 import { toast } from "sonner";
-import { SubmitButton } from "@/app/components/submit-button";
+import { SubmitButton } from "@/app/_components/submit-button";
 import { redirect } from "next/navigation";
 
 /**

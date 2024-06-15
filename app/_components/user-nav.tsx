@@ -53,6 +53,9 @@ export const UserNav = ({ email, name, userImage }: UserNavProps) => {
                     <DropdownMenuItem asChild>
                         <Link href="/my-products">My Products</Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link href="/billing">Billing</Link>
+                    </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <Button variant="secondary" asChild>
