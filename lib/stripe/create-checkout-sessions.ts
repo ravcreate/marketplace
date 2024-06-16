@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 import { stripe } from "./stripe";
-import { getProduct } from "../actions";
 import prisma from "../db";
 
 export async function createCheckoutSessions(formData: FormData) {
@@ -18,6 +17,12 @@ export async function createCheckoutSessions(formData: FormData) {
             name: true,
             images: true,
             price: true,
+            productFile: true,
+            User: {
+                select: {
+                    connectedAccountId: true,
+                },
+            },
         },
     });
 
@@ -34,9 +39,22 @@ export async function createCheckoutSessions(formData: FormData) {
                         images: data?.images,
                     },
                 },
+
                 quantity: 1,
             },
         ],
+        metadata: {
+            link: data?.productFile as string,
+        },
+        // commission rate
+        payment_intent_data: {
+            application_fee_amount:
+                // get 10% for the total value as commission
+                Math.round((data?.price as number) * 100) * 0.1,
+            transfer_data: {
+                destination: data?.User?.connectedAccountId as string,
+            },
+        },
         success_url: "http://localhost:3000/payment/success",
         cancel_url: "http://localhost:3000/payment/cancel",
     });

@@ -13,8 +13,10 @@ import { ProductDescription } from "@/app/_components/product-description";
 import { JSONContent } from "@tiptap/react";
 import { createCheckoutSessions } from "@/lib/stripe/create-checkout-sessions";
 import { SubmitButton } from "@/app/_components/submit-button";
+import { unstable_noStore as noStore } from "next/cache";
 
 const ProductPage = async ({ params }: { params: { id: string } }) => {
+    noStore();
     const data = await getProduct(params.id);
     const isMultipleImages = data?.images.length! > 1 ? true : false;
 

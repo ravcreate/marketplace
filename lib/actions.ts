@@ -44,7 +44,7 @@ export async function sellProduct(prevState: any, formData: FormData) {
         return state;
     }
 
-    await prisma.product.create({
+    const data = await prisma.product.create({
         data: {
             name: validateFields.data.name,
             category: validateFields.data.category as CategoryTypes,
@@ -62,7 +62,7 @@ export async function sellProduct(prevState: any, formData: FormData) {
         message: "Your Product has been created!",
     };
 
-    return state;
+    return redirect(`/product/${data.id}`);
 }
 
 export async function getUserData() {
@@ -410,4 +410,42 @@ export async function createdStripeAccountLink() {
     });
 
     return redirect(accountLink.url);
+}
+
+/**
+ *	Log into Stripe Dashboard
+ */
+export async function getStripeDashboardLink() {
+    const user = await getCurrentUser();
+
+    const data = await prisma.user.findUnique({
+        where: {
+            id: user.id,
+        },
+        select: {
+            connectedAccountId: true,
+        },
+    });
+
+    const loginLink = await stripe.accounts.createLoginLink(
+        data?.connectedAccountId as string
+    );
+
+    return redirect(loginLink.url);
+}
+
+export async function checkForStripeConnectLinked() {
+    const user = await getCurrentUser();
+    const data = await prisma.user.findUnique({
+        where: {
+            id: user.id,
+        },
+        select: {
+            stripeConnectedLinked: true,
+        },
+    });
+    if (data?.stripeConnectedLinked === false) {
+        return redirect("/billing");
+    }
+    return null;
 }

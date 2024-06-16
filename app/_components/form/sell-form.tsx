@@ -17,7 +17,6 @@ import { Label } from "@/components/ui/label";
 import { SelectCategory } from "@/app/_components/select-category";
 import { Textarea } from "@/components/ui/textarea";
 
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { JSONContent } from "@tiptap/react";
 import { useFormState } from "react-dom";
@@ -42,7 +41,6 @@ const SellForm = () => {
     useEffect(() => {
         if (state.status === "success") {
             toast.success(state.message);
-            redirect("/");
         } else if (state.status === "error") {
             toast.error(state.message);
         }

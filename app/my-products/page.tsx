@@ -1,7 +1,9 @@
 import { getUserProducts } from "@/lib/actions";
 import ProductCard from "../_components/product-card";
+import { unstable_noStore as noStore } from "next/cache";
 
 const MyProductRoute = async () => {
+    noStore();
     const data = await getUserProducts();
     console.log(data);
 
