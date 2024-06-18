@@ -4,7 +4,6 @@ import {
     Container,
     Head,
     Html,
-    Link,
     Preview,
     Section,
     Tailwind,
